@@ -1,0 +1,7 @@
+# Exact versions used to develop and test step 2 (CPython 3.13). Prebuilt macOS arm64 wheels exist for each.
+numpy==2.5.3
+pillow==12.3.0
+opencv-python-headless==5.0.0.93
+pycocotools==2.0.11
+# for tests/make_sample.py only
+scikit-image==0.26.0

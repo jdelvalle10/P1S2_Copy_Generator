@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+*.part
+# generated data never belongs in the repository
+originals/
+copies/
+qa/
+parts/
+manifest_*.csv
+run_metadata.json
