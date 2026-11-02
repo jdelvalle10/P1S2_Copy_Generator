@@ -2,7 +2,7 @@
 
 Builds every copy of every original for the Distance-vs-Accuracy experiment (protocol steps 4–7:
 partition, catalogues, generation, QA sheets). It reads **only** the output folder of step 1
-(`COCO_Dataset-Retriever`) and writes the copies to disk.
+(`P1S1_COCO_Dataset_Retriever`) and writes the copies to disk.
 
 ## Where this script sits in the experiment
 
@@ -65,7 +65,7 @@ flowchart TB
   class S8,S9,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S20,S21 pending
 ```
 
-**Dark blue:** this repository (P1S2 · P1S2_Copy_Generator), protocol steps 4, 5, 6, 7. **Light blue:** the other finished script (P1S1 · COCO_Dataset-Retriever), step 3. **Grey:** protocol documents, not scripts. **Dashed:** scripts not written yet. Step 7 is partly automated: P1S2 draws the contact sheets and the researcher inspects them.
+**Dark blue:** this repository (P1S2 · P1S2_Copy_Generator), protocol steps 4, 5, 6, 7. **Light blue:** the other finished script (P1S1 · P1S1_COCO_Dataset_Retriever), step 3. **Grey:** protocol documents, not scripts. **Dashed:** scripts not written yet. Step 7 is partly automated: P1S2 draws the contact sheets and the researcher inspects them.
 
 ## Usage
 

@@ -2,7 +2,7 @@
 # Released under the MIT License (see LICENSE).
 """Step 2 of the Distance-vs-Accuracy experiment: build the copies of every original.
 
-Reads ONLY the output folder of step 1 (COCO_Dataset-Retriever):
+Reads ONLY the output folder of step 1 (P1S1_COCO_Dataset_Retriever):
     IN/images/*.jpg                         original COCO bytes
     IN/annotations/instances_<split>2017.json   cached COCO annotations (object outlines, crowd flags, licences);
                                             both train and val for a train+val pool
