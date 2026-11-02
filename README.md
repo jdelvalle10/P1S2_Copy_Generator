@@ -4,6 +4,71 @@ Builds every copy of every original for the Distance-vs-Accuracy experiment (pro
 partition, catalogues, generation, QA sheets). It reads **only** the output folder of step 1
 (`COCO_Dataset-Retriever`) and writes the copies to disk.
 
+## Where this script sits in the experiment
+
+The 21 steps of the experiment protocol (final version, approved 29 October 2026). Each script reads only the output of the script before it.
+
+```mermaid
+flowchart TB
+  subgraph A["A. Fix the protocol before any data exists"]
+    direction LR
+    S1["1. Criteria table from the literature<br/><i>document</i>"]
+    S2["2. Pre-register the protocol<br/><i>document</i>"]
+    S1 --> S2
+  end
+  subgraph B["B. Build the dataset"]
+    direction LR
+    S3["3. Select 2,000 originals<br/>from COCO train + val<br/><b>P1S1</b>"]
+    S4["4. Partition<br/>1,000 calibration / 1,000 test<br/><b>P1S2</b>"]
+    S5["5. Catalogues<br/>24 benign + 15 altering cells<br/><b>P1S2</b>"]
+    S6["6. Generate and store<br/>every copy<br/><b>P1S2</b>"]
+    S7["7. Visual QA<br/>contact sheets<br/><b>P1S2</b><br/><i>sheets made by P1S2;<br/>inspection by the researcher</i>"]
+    S3 --> S4 --> S5 --> S6 --> S7
+  end
+  subgraph C["C. Hash and measure"]
+    direction LR
+    S8["8. Hash: aHash, dHash,<br/>pHash, wHash"]
+    S9["9. Distances to the original<br/>and unrelated pairs"]
+    S10["10. Sanity checks<br/>and counts per cell"]
+    S8 --> S9 --> S10
+  end
+  subgraph D["D. Phase 1, calibration half"]
+    direction LR
+    S11["11. Describe distributions"]
+    S12["12. Separation P0<br/>Wilcoxon, AUC"]
+    S13["13. Thresholds at α and β"]
+    S14["14. Uncertainty<br/>bootstrap, beta-binomial"]
+    S15["15. Cell check"]
+    S11 --> S12 --> S13 --> S14 --> S15
+  end
+  subgraph E["E. Phase 2, test half"]
+    direction LR
+    S16["16. Validate thresholds"]
+    S17["17. Sweep 2,145<br/>threshold pairs"]
+    S18["18. Map: heatmaps,<br/>operating point"]
+    S19["19. Break down by edit,<br/>area and cell"]
+    S20["20. Compare hashes"]
+    S16 --> S17 --> S18 --> S19 --> S20
+  end
+  subgraph F["F. Report"]
+    direction LR
+    S21["21. Report per hash"]
+  end
+  A --> B --> C --> D --> E --> F
+  classDef this fill:#0b5cad,stroke:#0b5cad,color:#ffffff,stroke-width:3px
+  classDef other fill:#cfe3f7,stroke:#0b5cad,color:#0b2a4a
+  classDef manual fill:#eeeeee,stroke:#888888,color:#333333
+  classDef pending fill:#ffffff,stroke:#999999,color:#555555,stroke-dasharray:4 3
+  class S4,S5,S6,S7 this
+  class S3 other
+  class S1,S2 manual
+  class S8,S9,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S20,S21 pending
+```
+
+**Dark blue:** this repository (P1S2 · P1S2_Copy_Generator), protocol steps 4, 5, 6, 7. **Light blue:** the other finished script (P1S1 · COCO_Dataset-Retriever), step 3. **Grey:** protocol documents, not scripts. **Dashed:** scripts not written yet. Step 7 is partly automated: P1S2 draws the contact sheets and the researcher inspects them.
+
+## Usage
+
     python3 -m venv .venv && source .venv/bin/activate
     python3 -m pip install -r requirements.txt
     python3 -m unittest discover -s tests -v                                   # self-test, no network
