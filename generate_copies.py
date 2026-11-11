@@ -22,6 +22,13 @@ Protocol steps covered: 4 (partition), 5 (catalogues, fixed below), 6 (generate 
 
     python3 generate_copies.py --in ~/COCOSubset --out ~/DVA_copies
     python3 generate_copies.py --in ~/COCOSubset --out ~/DVA_pilot --limit 100      # pilot
+
+--limit processes only the first N originals of the seeded order, for a pilot. Their half assignment
+matches the full run (the partition is computed over all originals before --limit is applied), and
+removal and copy-move copies are identical to the full run (they use only the image's own objects).
+Splice copies, however, draw their donor from the other originals processed in the same half, so with
+--limit the donor pool is just those N; a splice copy therefore need not match the one the full run
+would produce. Reproduce splice copies with the same --limit (or no --limit) used to create them.
 """
 import argparse
 import csv
@@ -442,7 +449,9 @@ def main(argv=None):
     ap.add_argument("--in", dest="in_dir", required=True, help="step-1 output folder (has images/ and annotations/)")
     ap.add_argument("--out", dest="out_dir", required=True, help="output folder for originals, copies and manifests")
     ap.add_argument("--seed", type=int, default=DEFAULT_SEED, help=f"master seed (default {DEFAULT_SEED})")
-    ap.add_argument("--limit", type=int, help="process only the first N originals of the seeded order (pilot)")
+    ap.add_argument("--limit", type=int, help="process only the first N originals of the seeded order (pilot); "
+                                              "halves, removal and copy-move match the full run, but splice "
+                                              "donors are drawn only from these N, so splice copies may differ")
     ap.add_argument("--workers", type=int, default=os.cpu_count(), help="parallel processes (default: all cores)")
     ap.add_argument("--qa", type=int, default=50, help="number of contact sheets (protocol: 50)")
     ap.add_argument("--no-verify", action="store_true", help="skip re-reading each PNG after writing it")
