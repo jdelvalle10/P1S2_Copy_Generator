@@ -76,8 +76,17 @@ flowchart TB
     python3 generate_copies.py --in ~/COCOSubset --out ~/DVA_copies             # full run
 
 Options: `--seed` (master seed, default 20261029, the same as step 1), `--limit N` (first N originals
-of the seeded order; their halves match the full run), `--workers` (default: all cores; the output
-does not depend on it), `--qa` (contact sheets, default 50), `--no-verify` (skip re-reading each PNG).
+of the seeded order, for a pilot; their halves match the full run), `--workers` (default: all cores;
+the output does not depend on it), `--qa` (contact sheets, default 50), `--no-verify` (skip re-reading
+each PNG).
+
+**`--limit` and splice copies.** Because the partition is computed over all originals before `--limit`
+is applied, the half each original lands in always matches the full run. Removal and copy-move copies
+also match the full run, since they only use the image's own objects. **Splice** copies are the
+exception: a splice draws its donor object from the other originals processed in the same half, so
+under `--limit N` the donor pool is only those `N` originals and a splice copy need not be byte-for-byte
+identical to the one a full run would produce. To reproduce splice copies exactly, use the same
+`--limit` (or no `--limit`) that created them.
 An interrupted run resumes when started again with the same settings and output folder.
 
 ## Input (step-1 output)
