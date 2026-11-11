@@ -1,4 +1,5 @@
-# Exact versions used to develop and test step 2 (CPython 3.13). Prebuilt macOS arm64 wheels exist for each.
+# Exact versions pinned by the protocol (section 8), the shared reference environment (CPython 3.12).
+# Prebuilt macOS arm64 wheels exist for each.
 numpy==2.5.3
 pillow==12.3.0
 opencv-python-headless==5.0.0.93
